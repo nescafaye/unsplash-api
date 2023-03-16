@@ -10,6 +10,7 @@ const accessKey = "hbSGOSaMAaqMfWsUI6glgL3fSCCQbqaM80v6sWJ1xj8";
 app.get("/", async (req, res) => {
     try {
         const response = await axios.get(`https://api.unsplash.com/photos/?per_page=24&client_id=${accessKey}`);
+        // https://api.unsplash.com/search/photos/?query=${query}&client_id=${accessKey}
         console.log(response.data); 
         res.send(response.data);
     } catch (error) {

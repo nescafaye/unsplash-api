@@ -5,7 +5,7 @@ import IconButton from "./iconbutton";
 import { CgMenuRight, CgUnsplash } from "react-icons/cg";
 import { FaBehance, FaGithub } from "react-icons/fa";
 
-const Navbar = ({search}) => {
+const Navbar = ({search, children}) => {
   return (
     <div className="sticky top-0 text-white bg-[#F2F2F2] z-50 backdrop-filter backdrop-blur-md opacity-90">
       <div className="py-6 border-white mx-auto w-[95%] flex items-center justify-between bg-transparent">
@@ -21,13 +21,7 @@ const Navbar = ({search}) => {
         </div> */}
 
         <div className="w-96">
-          <SearchBar
-            value = {search}
-            color="gray"
-            iconSize={16}
-            textSize="text-sm"
-            placeholder="Search anything"
-          />
+          {children}
         </div>
 
         <div className="inline-flex gap-2">
