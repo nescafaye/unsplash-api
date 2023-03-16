@@ -6,11 +6,12 @@ const Navbar = lazy(() => import("../components/navbar"));
 const Image = lazy(() => import("../components/image"));
 // const Skeleton = lazy (() => import ("../components/skeleton"))
 
-const accessKey = "hbSGOSaMAaqMfWsUI6glgL3fSCCQbqaM80v6sWJ1xj8";
+const accessKey = "Zyve4MYyZZu2iGYEbxRLy-rW87L1Jj7WsNNslPy3qDg";
 
 const Home = () => {
   const [images, setImages] = useState([]);
   const [query, setQuery] = useState("");
+  // console.log(process.env);
 
   const fetchImages = async () => {
     const result = await axios.get(
@@ -21,22 +22,19 @@ const Home = () => {
   };
 
   useEffect(() => {
-    if (query !== "") {
+    if (query == "") {
+      fetchImages();
+    } else if (query !== "") {
       fetchImages(query);
     }
   }, [query]);
 
 
-  const handleInputChange = (event) => {
-    setQuery(event.target.value);
-  };
-
-
   return (
     <div className="min-h-screen bg-[#F2F2F2]">
-      <Navbar />
+      <Navbar search={query}/>
 
-      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 space-y-5 gap-5 mx-auto w-[95%] mt-24 pb-24">
+      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 space-y-5 gap-5 mx-auto w-[85%] mt-24 pb-24">
         {images.map((image) => {
           return (
             <>
@@ -45,6 +43,10 @@ const Home = () => {
                   key={image.id}
                   url={image.urls.small}
                   alt={image.description}
+                  user={image.user.username}
+                  likes={image.likes}
+                  link={image.links.html}
+                  profile={image.user.profile_image.medium}
                 />
               </Suspense>
             </>

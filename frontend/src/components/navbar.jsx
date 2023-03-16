@@ -5,13 +5,13 @@ import IconButton from "./iconbutton";
 import { CgMenuRight, CgUnsplash } from "react-icons/cg";
 import { FaBehance, FaGithub } from "react-icons/fa";
 
-const Navbar = () => {
+const Navbar = ({search}) => {
   return (
     <div className="sticky top-0 text-white bg-[#F2F2F2] z-50 backdrop-filter backdrop-blur-md opacity-90">
       <div className="py-6 border-white mx-auto w-[95%] flex items-center justify-between bg-transparent">
 
         <div className="font-space font-bold text-slate-500 text-xl">
-          unspleeesh!
+          <a href="">unspleeesh!</a>
         </div>
 
         {/* <div className="flex justify-center items-center gap-4 text-slate-500">
@@ -22,6 +22,7 @@ const Navbar = () => {
 
         <div className="w-96">
           <SearchBar
+            value = {search}
             color="gray"
             iconSize={16}
             textSize="text-sm"

@@ -6,7 +6,7 @@ const IconButton = ({url, children }) => {
         <a href={url} target="_blank" rel="noreferrer">
         
             <button
-              className={`hover:bg-purple flex p-1 items-center rounded-full text-white transition ease-in-out duration-150`}>
+              className={`hover:bg-purple flex items-center rounded-full transition ease-in-out duration-150`}>
                 {children}
             </button>
   
