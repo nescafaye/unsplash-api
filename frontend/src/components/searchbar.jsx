@@ -11,6 +11,10 @@ const SearchBar = ({
 }) => {
   const [query, setQuery] = useState("");
 
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     handleSearch(query);
@@ -25,7 +29,7 @@ const SearchBar = ({
             placeholder={placeholder}
             name="query"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={handleInputChange}
             className={`${height} w-full ${textSize} text-black bg-[#ebebeb] rounded-full py-2 pl-9 pr-2 placeholder-black outline-slate-400 placeholder-opacity-30`}
           />
           <div className="absolute inset-2.5 w-fit text-black">
@@ -41,7 +45,7 @@ const SearchBar = ({
 
 export default SearchBar;
 
-// import React, { useState } from 'react';
+
 
 // const SearchBar = ({ onSubmit }) => {
 //   const [query, setQuery] = useState('');

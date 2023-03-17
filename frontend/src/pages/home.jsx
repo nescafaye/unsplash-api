@@ -1,12 +1,12 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import axios from "axios";
+import Skeleton from "../components/skeleton";
 
 const Navbar = lazy(() => import("../components/navbar"));
-const Image = lazy(() => import("../components/image"));
-const Skeleton = lazy(() => import("../components/skeleton"));
 const SearchBar = lazy(() => import("../components/searchbar"));
+const Image = lazy(() => import("../components/image"));
 
-const accessKey = "Zyve4MYyZZu2iGYEbxRLy-rW87L1Jj7WsNNslPy3qDg";
+const ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 
 const Home = () => {
   const [images, setImages] = useState([]);
@@ -14,7 +14,7 @@ const Home = () => {
 
   const fetchImages = async () => {
     const result = await axios.get(
-      `https://api.unsplash.com/photos/?per_page=24&client_id=${accessKey}`
+      `https://api.unsplash.com/photos/?per_page=24&client_id=${ACCESS_KEY}`
     );
     console.log(result.data);
     setImages(result.data);
@@ -22,12 +22,9 @@ const Home = () => {
 
   const searchImage = async (query) => {
     setSearchQuery(query);
-    const response = await axios.get("https://api.unsplash.com/search/photos?per_page=30&page=1", {
-      params: {
-        query: query,
-        client_id: accessKey,
-      },
-    });
+    const response = await axios.get(
+      `https://api.unsplash.com/search/photos/?query=${query}&per_page=30&order_by=relevant&client_id=${ACCESS_KEY}`
+    );
     console.log(response.data.results);
     setImages(response.data.results);
   };
@@ -49,7 +46,7 @@ const Home = () => {
         {images.map((image) => {
           return (
             <>
-              <Suspense fallback={<Skeleton />}>
+              {/* <Suspense fallback={<Skeleton />}> */}
                 <Image
                   key={image.id}
                   url={image.urls.small}
@@ -59,7 +56,7 @@ const Home = () => {
                   link={image.links.html}
                   profile={image.user.profile_image.medium}
                 />
-              </Suspense>
+              {/* </Suspense> */}
             </>
           );
         })}
