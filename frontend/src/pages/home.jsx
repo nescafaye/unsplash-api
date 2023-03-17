@@ -11,6 +11,9 @@ const ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 const Home = () => {
   const [images, setImages] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [query, setQuery] = useState("");
+
+  console.log(searchQuery, query)
 
   const fetchImages = async () => {
     const result = await axios.get(
@@ -23,13 +26,14 @@ const Home = () => {
   const searchImage = async (query) => {
     setSearchQuery(query);
     const response = await axios.get(
-      `https://api.unsplash.com/search/photos/?query=${query}&per_page=30&order_by=relevant&client_id=${ACCESS_KEY}`
+      `https://api.unsplash.com/search/photos/?query=${query.search}&per_page=30&order_by=relevant&client_id=${ACCESS_KEY}`
     );
     console.log(response.data.results);
     setImages(response.data.results);
   };
 
   useEffect(() => {
+
     fetchImages();
   }, [searchQuery]);
 
@@ -39,6 +43,8 @@ const Home = () => {
         <SearchBar
           placeholder={"Search anything..."}
           handleSearch={searchImage}
+          query={query}
+          setQuery={setQuery}
         />
       </Navbar>
 
@@ -46,7 +52,7 @@ const Home = () => {
         {images.map((image) => {
           return (
             <>
-              {/* <Suspense fallback={<Skeleton />}> */}
+              <Suspense fallback={<Skeleton />}>
                 <Image
                   key={image.id}
                   url={image.urls.small}
@@ -56,7 +62,7 @@ const Home = () => {
                   link={image.links.html}
                   profile={image.user.profile_image.medium}
                 />
-              {/* </Suspense> */}
+              </Suspense>
             </>
           );
         })}

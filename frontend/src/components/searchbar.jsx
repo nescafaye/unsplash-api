@@ -1,41 +1,64 @@
-import React, {useState} from "react";
+import React, { useState, lazy, Suspense } from "react";
+import { useForm } from "react-hook-form";
+
 import { GoSearch } from "react-icons/go";
+import IconButton from "./iconbutton";
 
 const SearchBar = ({
   height,
-  handleSearch,
   color,
+  query,
+  handleSearch,
+  setQuery,
   iconSize,
   textSize,
   placeholder,
 }) => {
-  const [query, setQuery] = useState("");
+  // const [query, setQuery] = useState("");
 
-  const handleInputChange = (e) => {
+  const {
+    register,
+    // onChange,
+    handleSubmit,
+    // watch,
+    formState: { errors },
+  } = useForm();
+
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   handleSearch(query);
+  // };
+
+
+  const handleInputChange = (e) => {  
     setQuery(e.target.value);
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleSearch(query);
+    // handleSearch(query); 
   };
+
+  // const onHandleSubmit = (e) => {
+  //   e.preventDefault();
+  //   handleSearch(e); 
+  // };
 
   return (
     <div className="w-full">
-      <form onSubmit={handleSubmit}>
-        <div className="relative">
+      <form onSubmit={handleSubmit(handleSearch)}>
+        <div className="relative">{ 
           <input
+            {...register("search", { required: true })}
             type="text"
+            defaultValue={query}
             placeholder={placeholder}
-            name="query"
-            value={query}
-            onChange={handleInputChange}
+            name="search"
+            onChange={handleSubmit(handleSearch)}
+            // onKeyDown={(e) => {if (e.key === 'Enter') handleSubmit(handleSearch) }}
             className={`${height} w-full ${textSize} text-black bg-[#ebebeb] rounded-full py-2 pl-9 pr-2 placeholder-black outline-slate-400 placeholder-opacity-30`}
-          />
-          <div className="absolute inset-2.5 w-fit text-black">
-            <button type="submit">
+          />}
+          {errors.search && <span className="text-rose-800 text-sm">This field is required</span>}
+          <div className="absolute inset-3 w-fit text-black">
+            <IconButton type="submit">
               <GoSearch color={color} size={iconSize} />
-            </button>
+            </IconButton>
           </div>
         </div>
       </form>
@@ -44,8 +67,6 @@ const SearchBar = ({
 };
 
 export default SearchBar;
-
-
 
 // const SearchBar = ({ onSubmit }) => {
 //   const [query, setQuery] = useState('');
