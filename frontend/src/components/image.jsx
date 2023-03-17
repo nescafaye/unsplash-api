@@ -1,6 +1,5 @@
 import React from "react";
-import { FiHeart as Heart} from "react-icons/fi";
-import IconButton from "./iconbutton";
+import Heart from "./heartbutton";
 
 const Image = ({ url, alt, user, likes, link, profile }) => {
   return (
@@ -10,16 +9,13 @@ const Image = ({ url, alt, user, likes, link, profile }) => {
         src={url}
         alt={alt}
       />
-      <div className="rounded-b-md flex flex-col lg:flex-row justify-between border-slate-200 border-2 bg-[#eeeeee] p-5 gap-2">
+      <div className="rounded-b-md flex flex-col lg:flex-row justify-between md:items-center border-slate-200 border-2 bg-[#eeeeee] p-5 gap-2">
         <a href={link} className="inline-flex items-center gap-x-2">
-          <img src={profile} alt={user}  className="rounded-full w-8 lg:h-8" />
+          <img src={profile} alt={user} className="rounded-full w-8 lg:h-8" />
           <div className="text-[14px]">{user}</div>
         </a>
-        <div className="inline-flex gap-x-2">
-          <IconButton>
-            <Heart size={22}/>
-          </IconButton>
-          {likes}
+        <div>
+          <Heart size={24} likes={likes} />
         </div>
       </div>
     </div>
