@@ -1,5 +1,7 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { GoSearch } from "react-icons/go";
+import IconButton from "./iconbutton";
 
 const SearchBar = ({
   height,
@@ -10,10 +12,30 @@ const SearchBar = ({
   placeholder,
 }) => {
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 250);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    handleSearch(debouncedQuery);
+  }, [debouncedQuery]);
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,17 +47,19 @@ const SearchBar = ({
       <form onSubmit={handleSubmit}>
         <div className="relative">
           <input
+            {...register("search", { required: true })}
             type="text"
             placeholder={placeholder}
-            name="query"
+            name="search"
             value={query}
             onChange={handleInputChange}
             className={`${height} w-full ${textSize} text-black bg-[#ebebeb] rounded-full py-2 pl-9 pr-2 placeholder-black outline-slate-400 placeholder-opacity-30`}
           />
-          <div className="absolute inset-2.5 w-fit text-black">
-            <button type="submit">
+          {errors.search === "required" && <span>This is required</span>}
+          <div className="absolute inset-3 w-fit text-black">
+            <IconButton type="submit" disabled={!query}>
               <GoSearch color={color} size={iconSize} />
-            </button>
+            </IconButton>
           </div>
         </div>
       </form>
@@ -44,32 +68,3 @@ const SearchBar = ({
 };
 
 export default SearchBar;
-
-
-
-// const SearchBar = ({ onSubmit }) => {
-//   const [query, setQuery] = useState('');
-
-//   const handleInputChange = (event) => {
-//     setQuery(event.target.value);
-//   };
-
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     onSubmit(query);
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <input
-//         type="text"
-//         placeholder="Search photos..."
-//         value={query}
-//         onChange={handleInputChange}
-//       />
-//       <button type="submit">Search</button>
-//     </form>
-//   );
-// };
-
-// export default SearchBar;

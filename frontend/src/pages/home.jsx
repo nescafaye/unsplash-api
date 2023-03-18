@@ -39,6 +39,8 @@ const Home = () => {
         <SearchBar
           placeholder={"Search anything..."}
           handleSearch={searchImage}
+          iconSize={16}
+          color="gray"
         />
       </Navbar>
 
@@ -46,7 +48,7 @@ const Home = () => {
         {images.map((image) => {
           return (
             <>
-              {/* <Suspense fallback={<Skeleton />}> */}
+              <Suspense fallback={<Skeleton />}>
                 <Image
                   key={image.id}
                   url={image.urls.small}
@@ -56,7 +58,7 @@ const Home = () => {
                   link={image.links.html}
                   profile={image.user.profile_image.medium}
                 />
-              {/* </Suspense> */}
+              </Suspense>
             </>
           );
         })}
