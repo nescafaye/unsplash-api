@@ -5,8 +5,10 @@ import IconButton from "./iconbutton";
 
 const SearchBar = ({
   height,
-  handleSearch,
   color,
+  query,
+  handleSearch,
+  setQuery,
   iconSize,
   textSize,
   placeholder,
@@ -33,7 +35,7 @@ const SearchBar = ({
     handleSearch(debouncedQuery);
   }, [debouncedQuery]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e) => {  
     setQuery(e.target.value);
   };
 
@@ -42,13 +44,19 @@ const SearchBar = ({
     handleSearch(query);
   };
 
+  // const onHandleSubmit = (e) => {
+  //   e.preventDefault();
+  //   handleSearch(e); 
+  // };
+
   return (
     <div className="w-full">
-      <form onSubmit={handleSubmit}>
-        <div className="relative">
+      <form onSubmit={handleSubmit(handleSearch)}>
+        <div className="relative">{ 
           <input
             {...register("search", { required: true })}
             type="text"
+            defaultValue={query}
             placeholder={placeholder}
             name="search"
             value={query}
