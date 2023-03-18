@@ -52,7 +52,7 @@ const SearchBar = ({
   return (
     <div className="w-full">
       <form onSubmit={handleSubmit(handleSearch)}>
-        <div className="relative">{ 
+        <div className="relative">
           <input
             {...register("search", { required: true })}
             type="text"
