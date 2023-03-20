@@ -2,7 +2,7 @@ import React from 'react'
 
 const Skeleton = () => {
   return (
-    <div className='w-30 h-screen bg-slate-300 rounded-lg'>
+    <div className={`w-100 h-500 bg-black rounded-lg`}>
       
     </div>
   )
