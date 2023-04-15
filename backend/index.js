@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const axios = require('axios')
 const app = express();
@@ -5,7 +6,7 @@ const app = express();
 var cors = require("cors");
 app.use(cors());
 
-const accessKey = "hbSGOSaMAaqMfWsUI6glgL3fSCCQbqaM80v6sWJ1xj8";
+const accessKey = process.env.UNSPLASH_ACCESS_KEY
 
 app.get("/", async (req, res) => {
     try {
