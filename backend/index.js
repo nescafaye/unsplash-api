@@ -7,6 +7,7 @@ var cors = require("cors");
 app.use(cors());
 
 const accessKey = process.env.UNSPLASH_ACCESS_KEY
+const PORT = process.env.PORT
 
 app.get("/", async (req, res) => {
     try {
@@ -20,6 +21,6 @@ app.get("/", async (req, res) => {
     }
 });
 
-app.listen(3000, () => {
-    console.log(`Server Started at ${3000}`)
+app.listen(PORT, () => {
+    console.log(`Server Started at ${PORT}`)
 })
